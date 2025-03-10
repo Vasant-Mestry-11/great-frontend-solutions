@@ -3,8 +3,8 @@ const person = {
   lastName: "Doe",
 };
 
-const fullName = function () {
-  return this.firstName + " " + this.lastName;
+const fullName = function (state) {
+  return this.firstName + " " + this.lastName + ' ' + state;
 }
 
 
@@ -20,17 +20,19 @@ Function.prototype.myCall = function (context = {}, ...args) {
     throw Error('Not callable')
   }
   context.fn = this;
-  console.log(context)
   return context.fn(...args)
 }
 
-console.log(fullName.myCall(person2))
 
 Function.prototype.myApply = function (context = {}, args = []) {
   if (typeof this !== 'function') {
     throw Error('Not callable')
   }
+  if (!Array.isArray(args)) {
+    throw new Error("TypeError: CreateListFromArrayLike called on non-object")
+  }
   context.fn = this;
-  return context.fn(args)
+  return context.fn(...args)
 }
 
+console.log(fullName.myApply(person2, ["Vasant", "Mestry"]))
