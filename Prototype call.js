@@ -35,4 +35,18 @@ Function.prototype.myApply = function (context = {}, args = []) {
   return context.fn(...args)
 }
 
-console.log(fullName.myApply(person2, ["Vasant", "Mestry"]))
+
+Function.prototype.myBind = function (context = {}, args = []) {
+  if (typeof this !== 'function') {
+    throw Error('Not callable')
+  }
+  if (!Array.isArray(args)) {
+    throw new Error("TypeError: CreateListFromArrayLike called on non-object")
+  }
+  context.fn = this;
+  return function () {
+    return context.fn(...args)
+  }
+}
+
+console.log(fullName.myBind(person2, ["Vasant", "Mestry"])())
