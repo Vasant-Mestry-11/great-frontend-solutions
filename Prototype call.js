@@ -25,3 +25,12 @@ Function.prototype.myCall = function (context = {}, ...args) {
 }
 
 console.log(fullName.myCall(person2))
+
+Function.prototype.myApply = function (context = {}, args = []) {
+  if (typeof this !== 'function') {
+    throw Error('Not callable')
+  }
+  context.fn = this;
+  return context.fn(args)
+}
+
